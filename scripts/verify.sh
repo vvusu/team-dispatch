@@ -51,8 +51,8 @@ need_file() {
     exit 1
   fi
 }
-need_file "$SKILL_DIR/assets/launchd/team-dispatch.watch.plist"
-need_file "$SKILL_DIR/assets/windows/watch-install.ps1"
+need_file "$SKILL_DIR/assets/launchd/team-dispatch.watch.plist.xml"
+need_file "$SKILL_DIR/assets/windows/watch-install.ps1.txt"
   bash "$SKILL_DIR/scripts/setup.sh" >/tmp/team-dispatch.verify.setup.log 2>&1 || {
     tail -120 /tmp/team-dispatch.verify.setup.log >&2 || true
     fail "setup.sh failed (see /tmp/team-dispatch.verify.setup.log)"

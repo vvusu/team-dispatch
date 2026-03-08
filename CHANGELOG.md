@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.5 (2026-03-09)
+- fix(Clawhub): 将 `team-dispatch.watch.plist` 改为模板 `assets/launchd/team-dispatch.watch.plist.xml`，安装时渲染到 `~/Library/LaunchAgents/` 再 bootstrap（避免 Clawhub 过滤 .plist）
+- fix(Clawhub): 将 Windows watcher 安装脚本改为 `assets/windows/watch-install.ps1.txt`（避免 Clawhub 过滤 .ps1），文档说明复制改名后执行
+
 ## v1.0.4 (2026-03-09)
 - refactor: watcher 安装资产归档到 `assets/`（launchd plist / Windows ps1），避免发布包缺文件
 - fix: watcher 默认使用 `openclaw-cron`（用户可覆盖），watcher 配置读取改为“默认+用户覆盖 merge”

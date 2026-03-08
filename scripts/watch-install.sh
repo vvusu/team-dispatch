@@ -37,7 +37,7 @@ INTERVAL=${INTERVAL:-90}
 GRACE=${GRACE:-20}
 
 SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-PLIST_SRC="$SKILL_DIR/assets/launchd/team-dispatch.watch.plist"
+PLIST_TPL="$SKILL_DIR/assets/launchd/team-dispatch.watch.plist.xml"
 PLIST_DST="$HOME/Library/LaunchAgents/team-dispatch.watch.plist"
 LABEL="team-dispatch.watch"
 
@@ -170,8 +170,8 @@ if [ "$B" = "openclaw-cron" ]; then
 fi
 
 if [ "$B" = "launchd" ]; then
-  if [ ! -f "$PLIST_SRC" ]; then
-    echo "Missing plist: $PLIST_SRC" >&2
+  if [ ! -f "$PLIST_TPL" ]; then
+    echo "Missing plist template: $PLIST_TPL" >&2
     if try_openclaw_fallback; then exit 0; fi
     exit 1
   fi
@@ -183,11 +183,11 @@ if [ "$B" = "launchd" ]; then
   mkdir -p "$(dirname "$STDOUT_LOG")"
 
   if [ "$DRY_RUN" = "1" ]; then
-    echo "[dry-run] render plist: $PLIST_DST"
+    echo "[dry-run] render plist: $PLIST_TPL -> $PLIST_DST"
   else
     python3 - <<PY
 import os, plistlib
-src = os.path.expanduser("$PLIST_SRC")
+src = os.path.expanduser("$PLIST_TPL")
 dst = os.path.expanduser("$PLIST_DST")
 home = os.path.expanduser("~")
 with open(src, "rb") as f:
@@ -211,9 +211,9 @@ PY
 
   # best-effort unload previous
   if [ "$DRY_RUN" = "1" ]; then
-    echo "[dry-run] launchctl bootout gui/$(id -u) $PLIST_DST (best-effort)"
+    echo "[dry-run] launchctl bootout gui/$(id -u) $LABEL (best-effort)"
   else
-    launchctl bootout "gui/$(id -u)" "$PLIST_DST" >/dev/null 2>&1 || true
+    launchctl bootout "gui/$(id -u)" "$LABEL" >/dev/null 2>&1 || true
   fi
   run launchctl bootstrap "gui/$(id -u)" "$PLIST_DST"
   say "✅ LaunchAgent installed: $LABEL"

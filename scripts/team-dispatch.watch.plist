@@ -8,7 +8,7 @@
     <key>ProgramArguments</key>
     <array>
       <string>/bin/bash</string>
-      <string>~/skills/team-dispatch/scripts/watch.sh</string>
+      <string>~/.openclaw/skills/team-dispatch/scripts/watch.sh</string>
     </array>
 
     <key>EnvironmentVariables</key>

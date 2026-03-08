@@ -9,7 +9,7 @@ metadata:
       supported: ["en", "zh"]
 ---
 
-# 🚀 Team Dispatch v1.0.1 — Multi-Agent Workflow Orchestration
+# 🚀 Team Dispatch v1.0.2 — Multi-Agent Workflow Orchestration
 
 **一句需求 → 自动分析 → 智能拆解 → DAG 派发 → 故障重试 → 自动交付。**
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.2 (2026-03-09)
+- watcher 默认改为 `openclaw-cron`（仍可配置切换到 `auto-system-first`/launchd/systemd/cron）
+- 修复 `paths.projectsRoot` 的 `~/` 展开（避免在技能目录下创建字面 `~/work`）
+- watcher 文档补齐（CONFIG.md）
+- macOS LaunchAgent plist 的 watch.sh 路径改为 `~/.openclaw/skills/team-dispatch/...`（更符合软链接加载路径）
+
 ## v1.0.1 (2026-03-08)
 - Publish to ClawHub (version bump only; content unchanged from v1.0.0)
 

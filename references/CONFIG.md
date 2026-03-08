@@ -31,6 +31,16 @@ bash ~/skills/team-dispatch/scripts/setup-config.sh
 - `project-complete`: notify when project becomes `completed`
 - `all-tasks`: notify on every task completion
 
+## Watcher（后台周期任务）
+
+- `team.watcher.enabled` (default: `true`)
+- `team.watcher.backend` (default: `openclaw-cron`)
+  - `openclaw-cron`: 默认推荐（统一管理，开箱即用；但会消耗模型 token）
+  - `auto-system-first`: 系统调度优先（launchd/systemd/cron），失败才 fallback（更省 token）
+  - `launchd|systemd|cron`: 强制指定具体系统调度器
+- `team.watcher.interval` (seconds)
+- `team.watcher.grace` (seconds)
+
 ## Telegram notification
 
 Dispatcher-level behavior (not subagent):

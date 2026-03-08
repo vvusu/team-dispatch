@@ -86,8 +86,10 @@ PROJECTS_ROOT=$(node -e "
   try{ const p=fs.existsSync(up)?up:sp; j=JSON.parse(fs.readFileSync(p,'utf8')); }catch(e){}
   process.stdout.write(String(j.paths?.projectsRoot||'~/work'));
 ")
-# Expand leading ~/
-if [[ "$PROJECTS_ROOT" == ~/* ]]; then PROJECTS_ROOT="$HOME/${PROJECTS_ROOT#~/}"; fi
+# Expand leading ~/ (do NOT rely on shell tilde expansion, because the value is quoted)
+if [[ "$PROJECTS_ROOT" == "~/"* ]]; then
+  PROJECTS_ROOT="$HOME/${PROJECTS_ROOT#~/}"
+fi
 mkdir -p "$PROJECTS_ROOT"
 echo "   ✅ projectsRoot: $PROJECTS_ROOT"
 

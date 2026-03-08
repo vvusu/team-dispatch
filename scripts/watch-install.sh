@@ -38,6 +38,7 @@ GRACE=${GRACE:-20}
 
 SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PLIST_SRC="$SKILL_DIR/scripts/team-dispatch.watch.plist"
+PLIST_DST="$HOME/Library/LaunchAgents/team-dispatch.watch.plist"
 LABEL="team-dispatch.watch"
 
 OS="$(uname -s)"
@@ -175,17 +176,46 @@ if [ "$B" = "launchd" ]; then
     exit 1
   fi
 
-  # Note: the plist already contains default INTERVAL/GRACE; we override via launchctl setenv.
+  mkdir -p "$HOME/Library/LaunchAgents"
+  WATCH_SH="$HOME/.openclaw/skills/team-dispatch/scripts/watch.sh"
+  STDOUT_LOG="$HOME/.openclaw/workspace/tasks/watch.out.log"
+  STDERR_LOG="$HOME/.openclaw/workspace/tasks/watch.err.log"
+  mkdir -p "$(dirname "$STDOUT_LOG")"
+
+  if [ "$DRY_RUN" = "1" ]; then
+    echo "[dry-run] render plist: $PLIST_DST"
+  else
+    python3 - <<PY
+import os, plistlib
+src = os.path.expanduser("$PLIST_SRC")
+dst = os.path.expanduser("$PLIST_DST")
+home = os.path.expanduser("~")
+with open(src, "rb") as f:
+    data = plistlib.load(f)
+data["ProgramArguments"] = ["/bin/bash", os.path.join(home, ".openclaw/skills/team-dispatch/scripts/watch.sh")]
+data["StandardOutPath"] = os.path.join(home, ".openclaw/workspace/tasks/watch.out.log")
+data["StandardErrorPath"] = os.path.join(home, ".openclaw/workspace/tasks/watch.err.log")
+data["EnvironmentVariables"] = {
+    **(data.get("EnvironmentVariables") or {}),
+    "INTERVAL": str(os.environ.get("INTERVAL", "$INTERVAL")),
+    "GRACE": str(os.environ.get("GRACE", "$GRACE")),
+}
+with open(dst, "wb") as f:
+    plistlib.dump(data, f)
+PY
+  fi
+
+  # Note: keep env in both plist and launchctl setenv so manual reruns inherit overrides too.
   run launchctl setenv INTERVAL "$INTERVAL"
   run launchctl setenv GRACE "$GRACE"
 
   # best-effort unload previous
   if [ "$DRY_RUN" = "1" ]; then
-    echo "[dry-run] launchctl bootout gui/$(id -u) $LABEL (best-effort)"
+    echo "[dry-run] launchctl bootout gui/$(id -u) $PLIST_DST (best-effort)"
   else
-    launchctl bootout "gui/$(id -u)" "$LABEL" >/dev/null 2>&1 || true
+    launchctl bootout "gui/$(id -u)" "$PLIST_DST" >/dev/null 2>&1 || true
   fi
-  run launchctl bootstrap "gui/$(id -u)" "$PLIST_SRC"
+  run launchctl bootstrap "gui/$(id -u)" "$PLIST_DST"
   say "✅ LaunchAgent installed: $LABEL"
   exit 0
 fi

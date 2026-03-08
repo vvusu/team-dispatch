@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "language": "zh",
   "languageNote": "Switch to 'zh' for Chinese output. Default is English. 切换为 'zh' 输出中文，默认为英文。",
   "notifyPolicy": "failures-only",
@@ -11,12 +11,12 @@
   "team": {
     "watcher": {
       "enabled": true,
-      "backend": "auto-system-first",
+      "backend": "openclaw-cron",
       "interval": 90,
       "grace": 20,
       "jobName": "Team Dispatch watcher",
       "jobDescription": "Low-frequency reconciliation: scan tasks/active for overdue in-progress tasks and reset to pending when retries remain.",
-      "note": "Cross-platform background watcher installer. backend: auto|openclaw-cron|launchd|systemd|cron"
+      "note": "Cross-platform background watcher installer. backend: openclaw-cron|auto|auto-system-first|launchd|systemd|cron"
     },
     "main": {
       "displayName": "main",

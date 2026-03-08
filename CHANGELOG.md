@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.1 (2026-03-08)
+- Publish to ClawHub (version bump only; content unchanged from v1.0.0)
+
+
 ## v1.0.0 (2026-03-07)
 - 🌍 **Add i18n support (English/Chinese)** — Default English, switch via config
 - 🌍 **添加国际化支持（中英文双语）** — 默认英文，可通过配置切换

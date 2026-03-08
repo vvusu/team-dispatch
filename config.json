@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "language": "zh",
   "languageNote": "Switch to 'zh' for Chinese output. Default is English. 切换为 'zh' 输出中文，默认为英文。",
   "notifyPolicy": "failures-only",

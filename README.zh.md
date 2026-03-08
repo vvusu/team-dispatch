@@ -4,7 +4,7 @@
 
 > 一句需求 → 自动分析 → 智能拆解 → DAG 派发 → 故障重试 → 自动交付。
 
-[![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)](https://github.com/vvusu/team-dispatch/releases)
+[![Version](https://img.shields.io/badge/version-1.0.3-blue.svg)](https://github.com/vvusu/team-dispatch/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ---
@@ -96,7 +96,7 @@ ls -la ~/.openclaw/skills/team-dispatch
 
 ```json
 {
-  "version": "1.0.2",
+  "version": "1.0.3",
   "language": "zh",
   "notifyPolicy": "failures-only",
   "team": {

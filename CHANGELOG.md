@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.3 (2026-03-09)
+- fix(macOS): watcher 安装改为先渲染绝对路径 LaunchAgent plist 到 `~/Library/LaunchAgents/` 再 bootstrap
+- fix(macOS): 避免 launchd 因 plist 中使用 `~` 路径导致 `Bootstrap failed: 5: Input/output error`
+
 ## v1.0.2 (2026-03-09)
 - watcher 默认改为 `openclaw-cron`（仍可配置切换到 `auto-system-first`/launchd/systemd/cron）
 - 修复 `paths.projectsRoot` 的 `~/` 展开（避免在技能目录下创建字面 `~/work`）

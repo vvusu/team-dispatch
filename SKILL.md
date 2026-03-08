@@ -9,7 +9,7 @@ metadata:
       supported: ["en", "zh"]
 ---
 
-# 🚀 Team Dispatch v1.0.3 — Multi-Agent Workflow Orchestration
+# 🚀 Team Dispatch v1.0.4 — Multi-Agent Workflow Orchestration
 
 **一句需求 → 自动分析 → 智能拆解 → DAG 派发 → 故障重试 → 自动交付。**
 
@@ -465,7 +465,7 @@ tasks/
 | `scripts/watch.sh` | 低频巡检卡死任务（前台运行） | `INTERVAL=90 GRACE=20 bash <SKILL_DIR>/scripts/watch.sh` |
 | `scripts/watch-install.sh` | 安装 watcher（后台常驻，跨平台：macOS/Linux；Windows见ps1） | `bash <SKILL_DIR>/scripts/watch-install.sh` |
 | `scripts/watch-uninstall.sh` | 卸载 watcher（后台常驻） | `bash <SKILL_DIR>/scripts/watch-uninstall.sh` |
-| `scripts/watch-install.ps1` | Windows 安装 watcher（Scheduled Task） | `powershell -ExecutionPolicy Bypass -File <SKILL_DIR>\\scripts\\watch-install.ps1` |
+| `assets/windows/watch-install.ps1` | Windows 安装 watcher（Scheduled Task） | `powershell -ExecutionPolicy Bypass -File <SKILL_DIR>\\assets\\windows\\watch-install.ps1` |
 | `scripts/demo-project.sh` | 生成协作开发测试 Demo 项目（写入 tasks/active） | `bash <SKILL_DIR>/scripts/demo-project.sh` |
 
 ### ✅ 闭环自测（最小协作链路）

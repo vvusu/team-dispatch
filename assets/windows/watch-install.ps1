@@ -1,7 +1,7 @@
 # Team Dispatch watcher installer (Windows)
 # Usage (PowerShell):
-#   powershell -ExecutionPolicy Bypass -File .\scripts\watch-install.ps1
-#   $env:INTERVAL="90"; $env:GRACE="20"; powershell -ExecutionPolicy Bypass -File .\scripts\watch-install.ps1
+#   powershell -ExecutionPolicy Bypass -File .\assets\windows\watch-install.ps1
+#   $env:INTERVAL="90"; $env:GRACE="20"; powershell -ExecutionPolicy Bypass -File .\assets\windows\watch-install.ps1
 
 $SkillDir = (Resolve-Path (Join-Path $PSScriptRoot ".."))
 $Interval = if ($env:INTERVAL) { $env:INTERVAL } else { "90" }

@@ -4,7 +4,7 @@
 
 > One sentence → Auto-analysis → Smart decomposition → DAG dispatch → Auto-retry → Auto-delivery.
 
-[![Version](https://img.shields.io/badge/version-1.0.3-blue.svg)](https://github.com/vvusu/team-dispatch/releases)
+[![Version](https://img.shields.io/badge/version-1.0.4-blue.svg)](https://github.com/vvusu/team-dispatch/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ---
@@ -96,7 +96,7 @@ Edit `~/.openclaw/configs/team-dispatch.json`:
 
 ```json
 {
-  "version": "1.0.3",
+  "version": "1.0.4",
   "language": "en",
   "notifyPolicy": "failures-only",
   "team": {

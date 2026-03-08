@@ -42,6 +42,17 @@ if [ "$SKIP_SETUP" = "1" ]; then
   warn "SKIP_SETUP=1 (skipping setup.sh run)"
 else
   echo "\n[1] Running setup.sh (idempotent)"
+
+# Required assets sanity-check (important for Clawhub packaging)
+need_file() {
+  local p="$1"
+  if [ ! -f "$p" ]; then
+    echo "${RED}FAIL${NC}: missing required file: $p"
+    exit 1
+  fi
+}
+need_file "$SKILL_DIR/assets/launchd/team-dispatch.watch.plist"
+need_file "$SKILL_DIR/assets/windows/watch-install.ps1"
   bash "$SKILL_DIR/scripts/setup.sh" >/tmp/team-dispatch.verify.setup.log 2>&1 || {
     tail -120 /tmp/team-dispatch.verify.setup.log >&2 || true
     fail "setup.sh failed (see /tmp/team-dispatch.verify.setup.log)"

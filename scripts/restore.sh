@@ -6,7 +6,7 @@
 #   bash <SKILL_DIR>/scripts/restore.sh --from <backupDir>
 #   bash <SKILL_DIR>/scripts/restore.sh --dry-run
 
-set -e
+set -euo pipefail
 
 DRY_RUN=0
 FROM=""
@@ -23,9 +23,9 @@ done
 
 run() {
   if [ "$DRY_RUN" = "1" ]; then
-    echo "[dry-run] $*"
+    printf '[dry-run]'; printf ' %q' "$@"; printf '\n'
   else
-    eval "$@"
+    "$@"
   fi
 }
 
@@ -57,7 +57,7 @@ fi
 
 # restore openclaw.json
 if [ -f "$FROM/openclaw.json.bak" ]; then
-  run "cp \"$FROM/openclaw.json.bak\" \"$OPENCLAW_JSON\""
+  run cp "$FROM/openclaw.json.bak" "$OPENCLAW_JSON"
   say "✅ restored: $OPENCLAW_JSON"
 else
   say "⏭️  no openclaw.json backup in $FROM"
@@ -65,8 +65,8 @@ fi
 
 # restore team-dispatch config
 if [ -f "$FROM/team-dispatch.json.bak" ]; then
-  run "mkdir -p \"$HOME/.openclaw/configs\""
-  run "cp \"$FROM/team-dispatch.json.bak\" \"$CFG\""
+  run mkdir -p "$HOME/.openclaw/configs"
+  run cp "$FROM/team-dispatch.json.bak" "$CFG"
   say "✅ restored: $CFG"
 else
   say "⏭️  no team-dispatch.json backup in $FROM"
@@ -75,8 +75,10 @@ fi
 # restart gateway
 say ""
 say "🔄 restarting gateway..."
-run "openclaw gateway restart"
-run "openclaw gateway status | head -20"
+run openclaw gateway restart
+if [ "$DRY_RUN" != "1" ]; then
+  openclaw gateway status | head -20
+fi
 
 say ""
 say "✅ restore done."

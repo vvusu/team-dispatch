@@ -5,7 +5,7 @@
 #   bash <SKILL_DIR>/scripts/uninstall.sh --purge   # also delete managed agentDirs/config
 #   bash <SKILL_DIR>/scripts/uninstall.sh --dry-run
 
-set -e
+set -euo pipefail
 
 DRY_RUN=0
 PURGE=0
@@ -19,9 +19,23 @@ done
 
 run() {
   if [ "$DRY_RUN" = "1" ]; then
-    echo "[dry-run] $*"
+    printf '[dry-run]'; printf ' %q' "$@"; printf '\n'
   else
-    eval "$@"
+    "$@"
+  fi
+}
+
+safe_rm_dir() {
+  local p="$1"
+  if [ ! -e "$p" ]; then return 0; fi
+  if [ "$DRY_RUN" = "1" ]; then
+    printf '[dry-run]'; printf ' %q' "trash" "$p"; printf ' (fallback: rm -rf)\n'
+    return 0
+  fi
+  if command -v trash >/dev/null 2>&1; then
+    trash "$p"
+  else
+    rm -rf "$p"
   fi
 }
 
@@ -39,7 +53,7 @@ LINK="$HOME/.openclaw/skills/team-dispatch"
 if [ -L "$LINK" ]; then
   TARGET="$(readlink "$LINK")"
   if [ "$TARGET" = "$SKILL_DIR" ]; then
-    run "rm \"$LINK\""
+    run rm "$LINK"
     say "✅ removed symlink: $LINK"
   else
     say "⏭️  symlink exists but points elsewhere: $LINK -> $TARGET (skip)"
@@ -65,7 +79,7 @@ AGENTS=(coder product tester research trader writer)
 for a in "${AGENTS[@]}"; do
   AD="$HOME/.openclaw/agents/$a"
   if [ -d "$AD" ] && [ -f "$AD/.team-dispatch-managed" ]; then
-    run "rm -rf \"$AD\""
+    safe_rm_dir "$AD"
     say "🗑️  purged agentDir: $AD"
   else
     say "⏭️  skip agentDir: $AD (missing or not managed)"
@@ -74,7 +88,7 @@ done
 
 CFG="$HOME/.openclaw/configs/team-dispatch.json"
 if [ -f "$CFG" ] && [ -f "$HOME/.openclaw/configs/.team-dispatch-managed" ]; then
-  run "rm -f \"$CFG\""
+  run rm -f "$CFG"
   say "🗑️  removed config: $CFG"
 else
   say "⏭️  skip config: $CFG (missing or not managed)"

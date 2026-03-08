@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.4 (2026-03-09)
+- refactor: watcher 安装资产归档到 `assets/`（launchd plist / Windows ps1），避免发布包缺文件
+- fix: watcher 默认使用 `openclaw-cron`（用户可覆盖），watcher 配置读取改为“默认+用户覆盖 merge”
+- chore: 脚本安全/一致性（去掉 `eval`；uninstall purge 更安全；setup 输出版本号动态读取）
+- test: verify 增加必备资产检查（避免用户安装时才炸）
+
 ## v1.0.3 (2026-03-09)
 - fix(macOS): watcher 安装改为先渲染绝对路径 LaunchAgent plist 到 `~/Library/LaunchAgents/` 再 bootstrap
 - fix(macOS): 避免 launchd 因 plist 中使用 `~` 路径导致 `Bootstrap failed: 5: Input/output error`

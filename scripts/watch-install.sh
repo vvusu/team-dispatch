@@ -37,7 +37,7 @@ INTERVAL=${INTERVAL:-90}
 GRACE=${GRACE:-20}
 
 SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-PLIST_SRC="$SKILL_DIR/scripts/team-dispatch.watch.plist"
+PLIST_SRC="$SKILL_DIR/assets/launchd/team-dispatch.watch.plist"
 PLIST_DST="$HOME/Library/LaunchAgents/team-dispatch.watch.plist"
 LABEL="team-dispatch.watch"
 

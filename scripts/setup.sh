@@ -27,7 +27,8 @@ for arg in "$@"; do
   esac
 done
 
-echo "🚀 Team Dispatch v3.2 — 一键安装开始"
+TD_VERSION=$(node -e "const fs=require('fs');try{const j=JSON.parse(fs.readFileSync('$SKILL_DIR/config.json','utf8'));process.stdout.write(String(j.version||''));}catch(e){process.stdout.write('');}")
+echo "🚀 Team Dispatch v${TD_VERSION:-unknown} — 一键安装开始"
 echo "   Args: ${*:-<none>}"
 echo ""
 
@@ -426,10 +427,52 @@ echo ""
 
 # ─── Step 7: 安装 watcher（跨平台，默认启用，可 --no-watch 关闭） ───
 echo "🧭 Step 7: watcher（任务监控/超时重试兜底）..."
-WATCH_ENABLED=$(node -e "try{const fs=require('fs');const home=process.env.HOME;const up=home+'/.openclaw/configs/team-dispatch.json';const sp='$SKILL_DIR/config.json';const p=fs.existsSync(up)?up:sp;const j=JSON.parse(fs.readFileSync(p,'utf8'));const w=j.team?.watcher;process.stdout.write(w?.enabled===false?'0':'1');}catch(e){process.stdout.write('1');}")
-WATCH_BACKEND=$(node -e "try{const fs=require('fs');const home=process.env.HOME;const up=home+'/.openclaw/configs/team-dispatch.json';const sp='$SKILL_DIR/config.json';const p=fs.existsSync(up)?up:sp;const j=JSON.parse(fs.readFileSync(p,'utf8'));process.stdout.write(String(j.team?.watcher?.backend||'auto'));}catch(e){process.stdout.write('auto');}")
-WATCH_INTERVAL=$(node -e "try{const fs=require('fs');const home=process.env.HOME;const up=home+'/.openclaw/configs/team-dispatch.json';const sp='$SKILL_DIR/config.json';const p=fs.existsSync(up)?up:sp;const j=JSON.parse(fs.readFileSync(p,'utf8'));process.stdout.write(String(j.team?.watcher?.interval||90));}catch(e){process.stdout.write('90');}")
-WATCH_GRACE=$(node -e "try{const fs=require('fs');const home=process.env.HOME;const up=home+'/.openclaw/configs/team-dispatch.json';const sp='$SKILL_DIR/config.json';const p=fs.existsSync(up)?up:sp;const j=JSON.parse(fs.readFileSync(p,'utf8'));process.stdout.write(String(j.team?.watcher?.grace||20));}catch(e){process.stdout.write('20');}")
+WATCH_ENABLED=$(node -e "
+  const fs=require('fs');
+  const home=process.env.HOME;
+  const up=home+'/.openclaw/configs/team-dispatch.json';
+  const sp='$SKILL_DIR/config.json';
+  let u={}, s={};
+  try{ if (fs.existsSync(up)) u=JSON.parse(fs.readFileSync(up,'utf8')); }catch(e){}
+  try{ if (fs.existsSync(sp)) s=JSON.parse(fs.readFileSync(sp,'utf8')); }catch(e){}
+  // Merge: skill defaults first, user overrides second (missing fields fall back to defaults)
+  const merged={...s, ...u, team:{...(s.team||{}), ...(u.team||{}), watcher:{...((s.team||{}).watcher||{}), ...(((u.team||{}).watcher)||{})}}};
+  const w=merged.team?.watcher||{};
+  process.stdout.write(w.enabled===false?'0':'1');
+")
+WATCH_BACKEND=$(node -e "
+  const fs=require('fs');
+  const home=process.env.HOME;
+  const up=home+'/.openclaw/configs/team-dispatch.json';
+  const sp='$SKILL_DIR/config.json';
+  let u={}, s={};
+  try{ if (fs.existsSync(up)) u=JSON.parse(fs.readFileSync(up,'utf8')); }catch(e){}
+  try{ if (fs.existsSync(sp)) s=JSON.parse(fs.readFileSync(sp,'utf8')); }catch(e){}
+  const merged={...s, ...u, team:{...(s.team||{}), ...(u.team||{}), watcher:{...((s.team||{}).watcher||{}), ...(((u.team||{}).watcher)||{})}}};
+  process.stdout.write(String(merged.team?.watcher?.backend||'openclaw-cron'));
+")
+WATCH_INTERVAL=$(node -e "
+  const fs=require('fs');
+  const home=process.env.HOME;
+  const up=home+'/.openclaw/configs/team-dispatch.json';
+  const sp='$SKILL_DIR/config.json';
+  let u={}, s={};
+  try{ if (fs.existsSync(up)) u=JSON.parse(fs.readFileSync(up,'utf8')); }catch(e){}
+  try{ if (fs.existsSync(sp)) s=JSON.parse(fs.readFileSync(sp,'utf8')); }catch(e){}
+  const merged={...s, ...u, team:{...(s.team||{}), ...(u.team||{}), watcher:{...((s.team||{}).watcher||{}), ...(((u.team||{}).watcher)||{})}}};
+  process.stdout.write(String(merged.team?.watcher?.interval||90));
+")
+WATCH_GRACE=$(node -e "
+  const fs=require('fs');
+  const home=process.env.HOME;
+  const up=home+'/.openclaw/configs/team-dispatch.json';
+  const sp='$SKILL_DIR/config.json';
+  let u={}, s={};
+  try{ if (fs.existsSync(up)) u=JSON.parse(fs.readFileSync(up,'utf8')); }catch(e){}
+  try{ if (fs.existsSync(sp)) s=JSON.parse(fs.readFileSync(sp,'utf8')); }catch(e){}
+  const merged={...s, ...u, team:{...(s.team||{}), ...(u.team||{}), watcher:{...((s.team||{}).watcher||{}), ...(((u.team||{}).watcher)||{})}}};
+  process.stdout.write(String(merged.team?.watcher?.grace||20));
+")
 
 if [ "$NO_WATCH" -eq 1 ]; then
     echo "   ⏭️  已通过 --no-watch 禁用 watcher 安装"
@@ -446,7 +489,7 @@ fi
 
 echo ""
 if [ "$ERRORS" -eq 0 ]; then
-    echo "🎉 安装完成！Team Dispatch v3.2 已就绪"
+    echo "🎉 安装完成！Team Dispatch v${TD_VERSION:-unknown} 已就绪"
     echo ""
     echo "📋 已配置的团队："
     for agent in "${AGENTS[@]}"; do

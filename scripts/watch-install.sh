@@ -6,7 +6,7 @@
 #
 # Usage:
 #   bash <SKILL_DIR>/scripts/watch-install.sh
-#   INTERVAL=120 GRACE=20 bash <SKILL_DIR>/scripts/watch-install.sh
+#   INTERVAL=300 GRACE=20 bash <SKILL_DIR>/scripts/watch-install.sh
 #   bash <SKILL_DIR>/scripts/watch-install.sh --backend auto|openclaw-cron|launchd|systemd|cron
 #   bash <SKILL_DIR>/scripts/watch-install.sh --dry-run
 
@@ -33,7 +33,7 @@ run() {
 
 say() { echo "$@"; }
 
-INTERVAL=${INTERVAL:-120}
+INTERVAL=${INTERVAL:-300}
 GRACE=${GRACE:-20}
 
 SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"

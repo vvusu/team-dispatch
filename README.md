@@ -275,7 +275,7 @@ tasks/
 bash ~/skills/team-dispatch/scripts/watch.sh
 
 # Custom interval
-INTERVAL=120 GRACE=20 bash ~/skills/team-dispatch/scripts/watch.sh
+INTERVAL=300 GRACE=20 bash ~/skills/team-dispatch/scripts/watch.sh
 ```
 
 ---

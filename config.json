@@ -1,5 +1,5 @@
 {
-  "version": "1.0.7",
+  "version": "1.0.8",
   "language": "en",
   "languageNote": "Default language for output. Options: 'en' | 'zh'. Set to 'zh' for Chinese output.",
   "notifyPolicy": "failures-only",
@@ -12,7 +12,7 @@
     "watcher": {
       "enabled": true,
       "backend": "auto",
-      "interval": 120,
+      "interval": 300,
       "grace": 20,
       "jobName": "Team Dispatch watcher",
       "jobDescription": "Low-frequency reconciliation: scan tasks/active for overdue in-progress tasks and reset to pending when retries remain.",
@@ -113,6 +113,21 @@
         "displayNameEN": "Lyra",
         "emoji": "✒️",
         "theme": "content writing",
+        "toolsProfile": "full",
+        "model": "openai-codex/gpt-5.4",
+        "username": "",
+        "notify": {
+          "telegram": {
+            "enabled": false,
+            "chatId": ""
+          }
+        }
+      },
+      "shield": {
+        "displayName": "Security",
+        "displayNameEN": "Shield",
+        "emoji": "🛡️",
+        "theme": "security audit",
         "toolsProfile": "full",
         "model": "openai-codex/gpt-5.4",
         "username": "",

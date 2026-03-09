@@ -169,7 +169,7 @@ else
 
   if [ -z "$JOB_ID" ]; then
     # attempt install (auto)
-    INTERVAL=120 GRACE=20 bash "$SKILL_DIR/scripts/watch-install.sh" --backend auto >/tmp/team-dispatch.verify.watch-install.log 2>&1 || true
+    INTERVAL=300 GRACE=20 bash "$SKILL_DIR/scripts/watch-install.sh" --backend auto >/tmp/team-dispatch.verify.watch-install.log 2>&1 || true
     JOB_JSON=$(openclaw cron list --json 2>/dev/null)
     JOB_ID=$(printf %s "$JOB_JSON" | node -e "
       let s='';process.stdin.on('data',d=>s+=d);process.stdin.on('end',()=>{

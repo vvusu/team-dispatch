@@ -9,7 +9,7 @@
 #   2. 创建任务目录 + 复制模板
 #   3. 生成用户配置（team-dispatch.json）
 #   4. 为每个子 Agent 创建独立 agentDir（~/.openclaw/agents/<id>），包含完整 workspace 模板
-#   5. 将 6 个子 Agent 写入 openclaw.json（含 workspace/identity/model）
+#   5. 将 7 个子 Agent 写入 openclaw.json（含 workspace/identity/model）
 #   6. 重启 Gateway 使配置生效
 
 set -e
@@ -460,7 +460,7 @@ WATCH_INTERVAL=$(node -e "
   try{ if (fs.existsSync(up)) u=JSON.parse(fs.readFileSync(up,'utf8')); }catch(e){}
   try{ if (fs.existsSync(sp)) s=JSON.parse(fs.readFileSync(sp,'utf8')); }catch(e){}
   const merged={...s, ...u, team:{...(s.team||{}), ...(u.team||{}), watcher:{...((s.team||{}).watcher||{}), ...(((u.team||{}).watcher)||{})}}};
-  process.stdout.write(String(merged.team?.watcher?.interval||120));
+  process.stdout.write(String(merged.team?.watcher?.interval||300));
 ")
 WATCH_GRACE=$(node -e "
   const fs=require('fs');

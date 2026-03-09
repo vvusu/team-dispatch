@@ -140,9 +140,12 @@ def main() -> None:
 
     while True:
         sr = scan_once(args.tasks_dir, grace=args.grace)
-        print(
-            f"[{now_iso()}] scan: changed_files={sr.changed_files} overdue={sr.overdue_tasks} "
-            f"reset_to_pending={sr.reset_to_pending} blocked_projects={sr.blocked_projects}")
+        # 静默模式：只有异常时才输出
+        if sr.overdue_tasks > 0 or sr.blocked_projects > 0 or sr.reset_to_pending > 0:
+            print(
+                f"[{now_iso()}] scan: changed_files={sr.changed_files} overdue={sr.overdue_tasks} "
+                f"reset_to_pending={sr.reset_to_pending} blocked_projects={sr.blocked_projects}",
+                flush=True)
         if args.once:
             break
         time.sleep(sleep_s())

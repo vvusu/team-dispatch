@@ -635,7 +635,7 @@ if [ "$ERRORS" -eq 0 ]; then
     done
     echo ""
     echo "🔄 正在重启 Gateway..."
-    openclaw gateway restart 2>/dev/null && echo "   ✅ Gateway 已重启" || echo "   ⚠️  Gateway 重启需手动执行: openclaw gateway restart"
+    openclaw gateway restart 2>/dev/null || true
     echo ""
     echo "使用方式: 直接向主 Agent 提需求，系统会自动分析、拆解、派发"
 else

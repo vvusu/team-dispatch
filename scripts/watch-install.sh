@@ -209,11 +209,14 @@ PY
   run launchctl setenv INTERVAL "$INTERVAL"
   run launchctl setenv GRACE "$GRACE"
 
-  # best-effort unload previous
+  # best-effort unload previous (try bootout first, then remove as fallback)
   if [ "$DRY_RUN" = "1" ]; then
     echo "[dry-run] launchctl bootout gui/$(id -u) $LABEL (best-effort)"
   else
-    launchctl bootout "gui/$(id -u)" "$LABEL" >/dev/null 2>&1 || true
+    if ! launchctl bootout "gui/$(id -u)" "$LABEL" >/dev/null 2>&1; then
+      # bootout may fail with EIO if service is in bad state; try remove as fallback
+      launchctl remove "$LABEL" >/dev/null 2>&1 || true
+    fi
   fi
   run launchctl bootstrap "gui/$(id -u)" "$PLIST_DST"
   say "✅ LaunchAgent installed: $LABEL"

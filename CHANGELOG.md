@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+- chore: Add `scripts/publish-clawhub.mjs` workaround publisher for ClawHub CLI `acceptLicenseTerms` incompatibility
+- docs: Document the local ClawHub publish flow in README
+
 ## v1.0.6 (2026-03-09)
 - feat: Add daily summary cron job (configurable via `team.dailySummary`)
 - feat: Configurable periodic tasks with `enabled` flag in config.json

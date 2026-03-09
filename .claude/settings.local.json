@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(launchctl list:*)",
+      "Bash(launchctl bootout:*)",
+      "Bash(ps:*)",
+      "Bash(launchctl kill:*)",
+      "Bash(kill:*)",
+      "Bash(launchctl remove:*)",
+      "Bash(bash:*)",
+      "Read(//Users/vvusu/Library/LaunchAgents/**)"
+    ]
+  }
+}

@@ -75,7 +75,7 @@ bash <SKILL_DIR>/scripts/setup.sh --baseline-models
   "name": "main",
   "workspace": "/Users/vvusu/.openclaw/workspace",
   "agentDir": "/Users/vvusu/.openclaw/agents/main/agent",
-  "model": "openai-codex/gpt-5.2",
+  "model": "openai-codex/gpt-5.4",
   "identity": {
     "name": "调度台",
     "emoji": "🎯"
@@ -110,7 +110,7 @@ bash <SKILL_DIR>/scripts/setup.sh --baseline-models
 ### 模型选择策略
 
 - `coder` → `openai-codex/gpt-5.3-codex`（OAuth，专为编码优化）
-- 其他 Agent → `openai-codex/gpt-5.2`（OAuth，通用稳定）
+- 其他 Agent → `openai-codex/gpt-5.4`（OAuth，通用稳定）
 - fallbacks 从用户已配置的 providers 中选取，确保不会 404
 
 ### 工具集分配
@@ -462,7 +462,7 @@ tasks/
 | `scripts/setup-config.sh` | 生成用户配置 | 自动跳过已存在 |
 | `scripts/doctor.sh` | 环境健康检查 | `bash <SKILL_DIR>/scripts/doctor.sh` |
 | `scripts/demo-project.sh` | 生成闭环自测 Demo 项目（product → coder → tester） | `bash <SKILL_DIR>/scripts/demo-project.sh` |
-| `scripts/watch.sh` | 低频巡检卡死任务（前台运行） | `INTERVAL=90 GRACE=20 bash <SKILL_DIR>/scripts/watch.sh` |
+| `scripts/watch.sh` | 低频巡检卡死任务（前台运行） | `INTERVAL=120 GRACE=20 bash <SKILL_DIR>/scripts/watch.sh` |
 | `scripts/watch-install.sh` | 安装 watcher（后台常驻，跨平台：macOS/Linux；Windows见ps1） | `bash <SKILL_DIR>/scripts/watch-install.sh` |
 | `scripts/watch-uninstall.sh` | 卸载 watcher（后台常驻） | `bash <SKILL_DIR>/scripts/watch-uninstall.sh` |
 | `assets/windows/watch-install.ps1.txt` | Windows 安装 watcher（Scheduled Task） | `copy <SKILL_DIR>\\assets\\windows\\watch-install.ps1.txt watch-install.ps1; powershell -ExecutionPolicy Bypass -File .\\watch-install.ps1` |

@@ -3,7 +3,7 @@
 <plist version="1.0">
   <dict>
     <key>Label</key>
-    <string>team-dispatch.watch</string>
+    <string>openclaw.team-dispatch.watch</string>
 
     <key>ProgramArguments</key>
     <array>
@@ -14,7 +14,7 @@
     <key>EnvironmentVariables</key>
     <dict>
       <key>INTERVAL</key>
-      <string>90</string>
+      <string>120</string>
       <key>GRACE</key>
       <string>20</string>
     </dict>

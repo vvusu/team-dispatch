@@ -1,7 +1,17 @@
 # Changelog
 
+## v1.0.6 (2026-03-09)
+- feat: Add daily summary cron job (configurable via `team.dailySummary`)
+- feat: Configurable periodic tasks with `enabled` flag in config.json
+- refactor: All config languages switched to English
+- refactor: Rename plist to `openclaw.team-dispatch.watch.plist` for consistency
+- fix: Path expansion for `~/work` directory creation
+- fix: Default backend changed from `openclaw-cron` to `auto` (system scheduler preferred)
+- chore: Update default models to `gpt-5.4` (general agents) and `gpt-5.3-codex` (coder)
+- chore: Update default watcher interval to 120 seconds
+
 ## v1.0.5 (2026-03-09)
-- fix(Clawhub): 将 `team-dispatch.watch.plist` 改为模板 `assets/launchd/team-dispatch.watch.plist.xml`，安装时渲染到 `~/Library/LaunchAgents/` 再 bootstrap（避免 Clawhub 过滤 .plist）
+- fix(Clawhub): 将 plist 改为模板 `assets/launchd/openclaw.team-dispatch.watch.plist.xml`，安装时渲染到 `~/Library/LaunchAgents/` 再 bootstrap（避免 Clawhub 过滤 .plist）
 - fix(Clawhub): 将 Windows watcher 安装脚本改为 `assets/windows/watch-install.ps1.txt`（避免 Clawhub 过滤 .ps1），文档说明复制改名后执行
 
 ## v1.0.4 (2026-03-09)

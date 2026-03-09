@@ -6,7 +6,7 @@
 #
 # Usage:
 #   bash <SKILL_DIR>/scripts/watch-install.sh
-#   INTERVAL=90 GRACE=20 bash <SKILL_DIR>/scripts/watch-install.sh
+#   INTERVAL=120 GRACE=20 bash <SKILL_DIR>/scripts/watch-install.sh
 #   bash <SKILL_DIR>/scripts/watch-install.sh --backend auto|openclaw-cron|launchd|systemd|cron
 #   bash <SKILL_DIR>/scripts/watch-install.sh --dry-run
 
@@ -33,13 +33,13 @@ run() {
 
 say() { echo "$@"; }
 
-INTERVAL=${INTERVAL:-90}
+INTERVAL=${INTERVAL:-120}
 GRACE=${GRACE:-20}
 
 SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-PLIST_TPL="$SKILL_DIR/assets/launchd/team-dispatch.watch.plist.xml"
-PLIST_DST="$HOME/Library/LaunchAgents/team-dispatch.watch.plist"
-LABEL="team-dispatch.watch"
+PLIST_TPL="$SKILL_DIR/assets/launchd/openclaw.team-dispatch.watch.plist.xml"
+PLIST_DST="$HOME/Library/LaunchAgents/openclaw.team-dispatch.watch.plist"
+LABEL="openclaw.team-dispatch.watch"
 
 OS="$(uname -s)"
 

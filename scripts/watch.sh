@@ -2,7 +2,7 @@
 # Run a low-frequency reconciliation watcher.
 # Usage:
 #   bash ~/skills/team-dispatch/scripts/watch.sh
-#   INTERVAL=90 GRACE=20 bash ~/skills/team-dispatch/scripts/watch.sh
+#   INTERVAL=120 GRACE=20 bash ~/skills/team-dispatch/scripts/watch.sh
 
 set -e
 

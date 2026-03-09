@@ -1,5 +1,5 @@
 {
-  "version": "1.0.6",
+  "version": "1.0.7",
   "language": "en",
   "languageNote": "Default language for output. Options: 'en' | 'zh'. Set to 'zh' for Chinese output.",
   "notifyPolicy": "failures-only",

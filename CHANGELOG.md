@@ -1,6 +1,9 @@
 # Changelog
 
 ## Unreleased
+
+## v1.0.7 (2026-03-09)
+- fix(setup.sh): Fix `set -e` exit on `openclaw gateway restart` failure (use `|| true`)
 - chore: Add `scripts/publish-clawhub.mjs` workaround publisher for ClawHub CLI `acceptLicenseTerms` incompatibility
 - docs: Document the local ClawHub publish flow in README
 

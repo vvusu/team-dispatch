@@ -136,7 +136,7 @@ clawhub whoami
 
 # Publish current version
 node ~/skills/team-dispatch/scripts/publish-clawhub.mjs \
-  --version 1.0.6 \
+  --version 1.0.7 \
   --changelog "Daily summary cron, configurable periodic tasks, English config cleanup, launchd plist rename, system scheduler preferred by default, model/version defaults update."
 ```
 
